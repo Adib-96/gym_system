@@ -1,0 +1,101 @@
+<MainLayout>:
+    orientation:'vertical'
+    spacing : 10
+    padding : 30
+
+    Label:
+        text:"[b]Username[/b]"
+        markup:"True"
+        font_size: 20
+        color:"black"
+        size_hint:None,None
+        size:90,40
+    TextInput:
+        id: name_input
+        hint_text:"Let us know your name"
+        multiline:False
+        font_size:"15pt"
+
+    Label:
+        markup:'True'
+        text:"[b]Age[/b]"
+        font_size:20
+        color:"black"
+        size_hint:None,None
+        size:40,40
+    TextInput:
+        id: age_input
+        hint_text:"Let us know your age"
+        multiline:False
+        font_size:"15pt"
+    Label:
+        markup:True
+        text:'[b]Email[/b]'
+        font_size:20
+        color:"black"
+        size_hint:None,None
+        size:50,40
+    TextInput:
+        id: email_input
+        hint_text:"Let us know your email"
+        multiline:False
+        font_size:"15pt"
+
+##################GYM ACTIVITY###############
+    Label:
+        markup:True
+        text:"[b]Activity[/b]"
+        font_size:20
+        color:'black'
+    BoxLayout:
+        orientation:'horizontal'
+        spacing:10
+        padding:5
+
+        ToggleButton:
+            text:"bodybuilding"
+            group:"activity"
+            id: bodybuilding
+
+        ToggleButton:
+            id:karate
+            text:"karate"
+            group:"activity"
+        ToggleButton:
+            id:aerobic
+            text:"aerobic"
+            group:"activity"
+
+##################SUBSCRIPTION METHODE###############
+    Label:
+        markup:True
+        text:"[b]Subscription Methode[/b]"
+        color:(0,0,0,1)
+        font_size:20
+
+    BoxLayout:
+        orientation:'horizontal'
+        spacing:20
+        padding:5
+
+        ToggleButton:
+            text:"monthly"
+            group:"subscription_methode"
+            id:monthly
+        ToggleButton:
+            text:"20S (valid only for 3 months)"
+            group:"subscription_methode"
+            id:s_20
+        ToggleButton:
+            text:"30S (valid only for 2 months)"
+            group:"subscription_methode"
+            id:s_30
+####################SUBMIT BUTTON######################
+    Button:
+        text:"Submit"
+        font_size:"20pt"
+        color:(.2,1,.5,1)
+        pos_hint: {'center_x': 0.5}
+        size_hint: .45, None
+        size: 200, 80
+        on_press:root.submit_form()
