@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.uix.image import Image
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
@@ -59,10 +60,18 @@ class MainLayout(BoxLayout):
 
     def show_popup(self):
         layout = BoxLayout(orientation='vertical')
-        lbl = Label(text="Member created successfully",font_size="30pt",color=(0.4,0.5,0.6,1))  # Use Kivy's Label
+
+        lbl = Label(text="Member created successfully",font_size="30pt",color=(0.4,0.5,0.6,1),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.5})
+
+        """
+            qr code image for testing unless implementing the real one :)
+        """
+        qrCode = Image(source='qr_to_scan.png')
+        qrCode.size = (400,400)
         close_button = Button(text="Close",size_hint=(0.4,0.1),pos_hint={'x':0.3})
         close_button.bind(on_press=self.close_popup)  # Bind close button to dismiss the popup
         layout.add_widget(lbl)
+        layout.add_widget(qrCode)
         layout.add_widget(close_button)
         self.popup = Popup(
             title='Subscribe Form',
