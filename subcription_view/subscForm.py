@@ -61,7 +61,8 @@ class MainLayout(BoxLayout):
     def show_popup(self):
         layout = BoxLayout(orientation='vertical')
 
-        lbl = Label(text="Member created successfully",font_size="30pt",color=(0.4,0.5,0.6,1),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.5})
+        lbl = Label(text="Member created successfully",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.5})
+        lb_scan_your_code = Label(text="Scan your Code",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.5})
 
         """
             qr code image for testing unless implementing the real one :)
@@ -70,7 +71,9 @@ class MainLayout(BoxLayout):
         qrCode.size = (400,400)
         close_button = Button(text="Close",size_hint=(0.4,0.1),pos_hint={'x':0.3})
         close_button.bind(on_press=self.close_popup)  # Bind close button to dismiss the popup
+        ## add widgets to container
         layout.add_widget(lbl)
+        layout.add_widget(lb_scan_your_code)
         layout.add_widget(qrCode)
         layout.add_widget(close_button)
         self.popup = Popup(
