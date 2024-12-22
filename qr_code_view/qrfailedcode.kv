@@ -1,0 +1,26 @@
+BoxLayout:
+   orientation: 'vertical'
+   canvas.before:
+      Color:
+         rgba:  0.086, 0.102, 0.114, 1
+      Rectangle:
+         pos: self.pos
+         size: self.size
+   Label:
+      text: "Access denied"
+      font_size: '30pt'
+      height: 90
+      size_hint_y: None
+      halign: 'center'
+      valign: 'middle'
+   Label:
+      text: "Renew your membership !!"
+      font_size: '30pt'
+      height: 90
+      size_hint_y: None
+      halign: 'center'
+      valign: 'middle'
+   Image:
+      source:"images/failed__pic.png"
+
+

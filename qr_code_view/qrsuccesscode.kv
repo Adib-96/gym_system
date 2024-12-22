@@ -1,0 +1,31 @@
+BoxLayout:
+   orientation: 'vertical'
+   canvas.before:
+      Color:
+         rgba:  0.34, 0.8, 0.6, 1  ##57CC99
+      Rectangle:
+         pos: self.pos
+         size: self.size
+
+   Label:
+      text: 'Entry Allowed'
+      font_size: '30pt'
+
+   ###images###
+   Image:
+      source:"images/success_pic.png"
+
+   BoxLayout:
+      orientation: 'vertical'
+      spacing:-10
+      Label:
+         text:'Welcome'
+         font_size: '30pt'
+      Label:
+         text:"Bienvenue"
+         font_size: '30pt'
+      Label:
+         text:app.arabic_text
+         font_name:"Amiri-Regular.ttf"
+         font_size: '30pt'
+
