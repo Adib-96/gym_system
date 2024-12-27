@@ -7,6 +7,7 @@ from kivy.uix.label import Label  # Import the correct Label class
 from kivy.config import Config
 from kivy.core.window import Window
 from datetime import datetime
+from kivy.uix.screenmanager import Screen
 
 # Set configuration
 Window.clearcolor = (1, 1, 1, 1)  # RGBA: White
@@ -67,7 +68,7 @@ class MainLayout(BoxLayout):
         """
             qr code image for testing unless implementing the real one :)
         """
-        qrCode = Image(source='qr_to_scan.png')
+        qrCode = Image(source='./assets/qr_to_scan.png')
         qrCode.size = (400,400)
         close_button = Button(text="Close",size_hint=(0.4,0.1),pos_hint={'x':0.3})
         close_button.bind(on_press=self.close_popup)  # Bind close button to dismiss the popup
@@ -89,10 +90,9 @@ class MainLayout(BoxLayout):
         self.popup.dismiss()
 
 
-class HomeScreen(App):
-    def build(self):
-        return MainLayout()
+class HomeScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(MainLayout())
 
 
-if __name__ == '__main__':
-    HomeScreen().run()
