@@ -59,7 +59,6 @@ class PowerPlanner(App):
 
         # Update the current button's background
         button.background_color = (0.5, 1, 0.5, 1)
-        print(button)# Light blue background
         self.selected_button = button
 
 
