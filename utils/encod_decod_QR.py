@@ -21,7 +21,7 @@ def generate_qrcode(member_id):
     qr = qrcode.QRCode(  # Corrected the typo here
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
+        box_size=6,
         border=4
     )
 
@@ -29,5 +29,9 @@ def generate_qrcode(member_id):
     qr.make(fit=True)
 
     img = qr.make_image(fill="black", back_color="white")
-    img.save('../assets/{}.png'.format(member_id))  # Ensure valid file path and extension
+    img.save('./qr_images/{}.png'.format(member_id))  # Ensure valid file path and extension
 
+
+
+def scan_and_verify_qr_code(encoded_qr_code):
+    pass

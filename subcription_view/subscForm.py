@@ -1,4 +1,3 @@
-from kivy.app import App
 from kivy.uix.image import Image
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
@@ -8,6 +7,9 @@ from kivy.config import Config
 from kivy.core.window import Window
 from datetime import datetime
 from kivy.uix.screenmanager import Screen
+import uuid
+from utils.encod_decod_QR import generate_qrcode
+
 
 # Set configuration
 Window.clearcolor = (1, 1, 1, 1)  # RGBA: White
@@ -21,6 +23,8 @@ class MainLayout(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.popup = None
+        self.user_info = {}
+
 
     def submit_form(self):
         name = self.ids.name_input.text
@@ -41,15 +45,15 @@ class MainLayout(BoxLayout):
                 sub_methode = sub_button.text.split()[0]
                 break
 
-        print({
-            'name': name,
-            'age': age,
-            'email': email,
-            'date': datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-            'activity': activity,
-            'sub_methode': sub_methode
-        })
+        ## populate user info with data
+        self.user_info['name'] = name
+        self.user_info['age'] = age
+        self.user_info['email'] = email
+        self.user_info['activity'] = activity
+        self.user_info['sub_methode'] = sub_methode
+        self.user_info['date'] = datetime.now().strftime("%d/%m/%Y")
 
+        ## show the popup
         self.show_popup()
 
         # Reset form fields
@@ -60,17 +64,22 @@ class MainLayout(BoxLayout):
         self.ids.email_input.text = ""
 
     def show_popup(self):
+        #generate user id
+        user_id = str(uuid.uuid4())
+        self.user_info['id'] = user_id
+        print(self.user_info)
         layout = BoxLayout(orientation='vertical')
+        layout.padding = 25
+        lbl = Label(text="Member created successfully",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),height=20,pos_hint = {'x':0.45,'y':0.9})
+        lb_scan_your_code = Label(text="Scan your Code",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.1})
 
-        lbl = Label(text="Member created successfully",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.5})
-        lb_scan_your_code = Label(text="Scan your Code",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),pos_hint = {'x':0.45,'y':0.5})
+        ### GENERATING QR CODE
+        generate_qrcode(user_id)
 
-        """
-            qr code image for testing unless implementing the real one :)
-        """
-        qrCode = Image(source='./assets/qr_to_scan.png')
-        qrCode.size = (400,400)
-        close_button = Button(text="Close",size_hint=(0.4,0.1),pos_hint={'x':0.3})
+        qrCode = Image(source="./qr_images/{}.png".format(user_id))
+        qrCode.size_hint= (.4,.3)
+        qrCode.pos_hint= {'x':.3, 'y':.1}
+        close_button = Button(text="Close",size_hint=(.5,0.07),pos_hint={'x':.25,'y':.1})
         close_button.bind(on_press=self.close_popup)  # Bind close button to dismiss the popup
         ## add widgets to container
         layout.add_widget(lbl)
