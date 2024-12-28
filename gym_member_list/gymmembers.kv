@@ -1,0 +1,67 @@
+<GymMembers>:
+    orientation: "vertical"
+    padding: 15
+    spacing: 20
+
+    ########### Filter by Username ###########
+    BoxLayout:
+        size_hint: 1, 0.1
+        orientation: "horizontal"
+        Label:
+            text: "Filter By Username:"
+        TextInput:
+            id: username_filter
+            hint_text: "Enter username"
+            multiline: False
+
+    ######## Filter by Activity #########
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, 0.1
+        Label:
+            text: "Filter By Activity:"
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+            Label:
+                text: "BodyBuilding"
+            CheckBox:
+                group: 'activity'
+                id: bodybuilding_field
+            Label:
+                text: "Karate"
+            CheckBox:
+                group: 'activity'
+                id: karate_field
+            Label:
+                text: "Aerobic"
+            CheckBox:
+                group: 'activity'
+                id: aerobic_field
+
+    ######## Filter by Subscription Method ########
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, 0.1
+        Label:
+            text: "Filter By Subscription Method:"
+        TextInput:
+            id: subscription_filter
+            hint_text: "Enter subscription method"
+            multiline: False
+
+    Button:
+        text: "Apply Filters"
+        size_hint: 0.4, 0.1
+        pos_hint: {"x": 0.55}
+
+    ############### Data Display ###############
+    RecycleView:
+        viewclass: 'Label'
+        data: [{'text': f'user_name : adib, age : 29 - {x}', 'bg_color': (0.2, 0.4, 0.6, 1) if x % 2 == 0 else (0.4, 0.6, 0.8, 1)}for x in range(20)]
+        RecycleBoxLayout:
+            default_size: None, dp(96)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
