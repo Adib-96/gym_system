@@ -33,5 +33,24 @@ def generate_qrcode(member_id):
 
 
 
-def scan_and_verify_qr_code(encoded_qr_code):
-    pass
+def decode_and_verify_qr_data(encoded_data,id_member):
+    try:
+
+        hashed_data = base64.urlsafe_b64decode(encoded_data)
+
+        data = f'{id_member}'.encode('utf-8')
+        expected_hmac= hmac.new(key.encode('utf-8'),data,hashlib.sha512).digest()
+
+        if hashed_data == expected_hmac:
+            print(f"QR code for {id_member} is correct.")
+        else:
+            print(f"QR code for {id_member} is not correct.")
+
+    except Exception as e:
+        print(f'Error during decoding or verification :{e}')
+
+"""encoded_data_from_qr = "WnF4Xd7t9P0B23Wg26XBIpUtKO5T6yBJhsGD5C-MAHIzHf51eBw_HQMg0LElWI5cZlIgPVmfYZh017nLrj0kjw=="
+member_id ='c729ca11-8018-4f46-8eb4-c2dfff162d09'
+
+decode_and_verify_qr_data(encoded_data_from_qr, member_id)
+"""
