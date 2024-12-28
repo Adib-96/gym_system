@@ -1,5 +1,5 @@
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
+from kivy.uix.screenmanager import ScreenManager, Screen,SlideTransition
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
@@ -25,7 +25,7 @@ class ScreenThree(Screen):
 class PowerPlanner(App):
     def build(self):
 
-        self.sm = ScreenManager(transition=SwapTransition())
+        self.sm = ScreenManager(transition=SlideTransition())
         self.sm.add_widget(HomeScreen(name="HomeScreen"))
         self.sm.add_widget(ScreenTwo(name="screen2"))
         self.sm.add_widget(ScreenThree(name="screen3"))
