@@ -9,19 +9,6 @@ import cv2
 from pyzbar.pyzbar import decode
 
 
-class HomeScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        layout = BoxLayout(orientation='vertical')
-        btn_scan = Button(text="Scan QR Code", size_hint=(1, 0.2))
-        btn_scan.bind(on_press=self.go_to_scanner)
-        layout.add_widget(btn_scan)
-        self.add_widget(layout)
-
-    def go_to_scanner(self, instance):
-        self.manager.current = 'scanner'
-
-
 class QRCodeScannerScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -47,12 +34,12 @@ class QRCodeScannerScreen(Screen):
         ret, frame = self.capture.read()
         if ret:
             # Convert the frame to texture for display
-            buffer = cv2.flip(frame, 0).tostring()
+            buffer = cv2.flip(frame, 0).tobytes()
             texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
             texture.blit_buffer(buffer, colorfmt='bgr', bufferfmt='ubyte')
             self.img.texture = texture
 
-            # Decode QR codes in the frame
+            # Decode QR codes in the frame and print (Entry allowed or access denied)
             for code in decode(frame):
                 qr_data = code.data.decode('utf-8')
                 self.message.text = f"QR Code Detected: {qr_data}"
@@ -62,8 +49,8 @@ class QRCodeScannerScreen(Screen):
 class MyApp(App):
     def build(self):
         sm = ScreenManager()
-        sm.add_widget(HomeScreen(name='home'))
         sm.add_widget(QRCodeScannerScreen(name='scanner'))
+        sm.current = 'scanner'  # Set the initial screen
         return sm
 
 
