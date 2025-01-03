@@ -5,9 +5,9 @@ import hmac
 import hashlib
 import base64
 
-# Load .env variables
+#! Load .env variables
 load_dotenv()
-key = os.getenv("QR_SECRET_KEY")
+key = os.getenv("QR_SECRET_KEY","waywa")
 
 
 def generate_qrcode(member_id):
@@ -18,7 +18,7 @@ def generate_qrcode(member_id):
 
     encoded_data = base64.urlsafe_b64encode(hashed_data).decode('utf-8')
 
-    qr = qrcode.QRCode(  # Corrected the typo here
+    qr = qrcode.QRCode(  
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=6,
@@ -33,6 +33,7 @@ def generate_qrcode(member_id):
 
 
 
+#* call this function into the scan view module 
 def decode_and_verify_qr_data(encoded_data,id_member):
     try:
 
@@ -49,8 +50,13 @@ def decode_and_verify_qr_data(encoded_data,id_member):
     except Exception as e:
         print(f'Error during decoding or verification :{e}')
 
-"""encoded_data_from_qr = "WnF4Xd7t9P0B23Wg26XBIpUtKO5T6yBJhsGD5C-MAHIzHf51eBw_HQMg0LElWI5cZlIgPVmfYZh017nLrj0kjw=="
-member_id ='c729ca11-8018-4f46-8eb4-c2dfff162d09'
+
+
+"""
+? for testing purpose ;)
+encoded_data_from_qr = "K2oKpTVKV8a694k-OH5CjCRIGZlgg2o4LGeUKpHHpyJY4GPEFIbag3UggpWrHlNSCTjQenOHnIWZkscbwGJUAQ=="
+member_id= 'b0665f1f-ae52-44f8-bfcc-799515901993'
+
 
 decode_and_verify_qr_data(encoded_data_from_qr, member_id)
 """
