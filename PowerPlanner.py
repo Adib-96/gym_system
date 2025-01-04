@@ -5,15 +5,13 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from subcription_view.subscForm import HomeScreen
+from scan_view.scan_view import QRCodeScannerScreen
 from kivy.lang.builder import Builder
 
 
 Builder.load_file("subcription_view/homescreen.kv")
 
-class ScreenTwo(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(Label(text="Welcome to Screen 2"))
+
 
 
 class ScreenThree(Screen):
@@ -27,12 +25,12 @@ class PowerPlanner(App):
 
         self.sm = ScreenManager(transition=SlideTransition())
         self.sm.add_widget(HomeScreen(name="HomeScreen"))
-        self.sm.add_widget(ScreenTwo(name="screen2"))
+        self.sm.add_widget(QRCodeScannerScreen(name="QR_code Screen"))
         self.sm.add_widget(ScreenThree(name="screen3"))
 
 
         self.dropdown = DropDown()
-        screens = [("Subscription Form", "HomeScreen"), ("Screen 2", "screen2"), ("Screen 3", "screen3")]
+        screens = [("Subscription Form", "HomeScreen"), ("QR_code Screen", "QR_code Screen"), ("Screen 3", "screen3")]
 
         self.selected_button = None
 
