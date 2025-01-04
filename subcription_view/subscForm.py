@@ -51,7 +51,7 @@ class MainLayout(BoxLayout):
         self.user_info['email'] = email
         self.user_info['activity'] = activity
         self.user_info['sub_methode'] = sub_methode
-        self.user_info['date'] = datetime.now().strftime("%d/%m/%Y")
+        self.user_info['date'] = datetime.now().strftime("%Y/%m/%d")
 
         ## show the popup
         self.show_popup()
