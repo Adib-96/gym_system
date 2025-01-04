@@ -44,15 +44,3 @@ class QRCodeScannerScreen(Screen):
                 qr_data = code.data.decode('utf-8')
                 self.message.text = f"QR Code Detected: {qr_data}"
                 print(f"QR Code: {qr_data}")  # Handle the detected QR code data
-
-
-class MyApp(App):
-    def build(self):
-        sm = ScreenManager()
-        sm.add_widget(QRCodeScannerScreen(name='scanner'))
-        sm.current = 'scanner'  # Set the initial screen
-        return sm
-
-
-if __name__ == '__main__':
-    MyApp().run()
