@@ -34,7 +34,7 @@ class MainLayout(BoxLayout):
         sub_methode = None
 
         # Iterate over Activities
-        for activ_button in [self.ids.bodybuilding, self.ids.karate, self.ids.aerobic]:
+        for activ_button in [self.ids.bodybuilding, self.ids.crossfit, self.ids.Mixed_Arts]:
             if activ_button.state == 'down':
                 activity = activ_button.text
                 break
@@ -67,7 +67,11 @@ class MainLayout(BoxLayout):
         #generate user id
         user_id = str(uuid.uuid4())
         self.user_info['id'] = user_id
+
+        ###############################***********************###################################
         print(self.user_info)
+        ###############################***********************###################################
+
         layout = BoxLayout(orientation='vertical')
         layout.padding = 25
         lbl = Label(text="Member created successfully",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0),size_hint=(None, None),height=20,pos_hint = {'x':0.45,'y':0.9})
