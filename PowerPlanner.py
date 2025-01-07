@@ -24,13 +24,13 @@ class PowerPlanner(App):
     def build(self):
 
         self.sm = ScreenManager(transition=SlideTransition())
-        self.sm.add_widget(HomeScreen(name="HomeScreen"))
+        self.sm.add_widget(HomeScreen(name="Membership Registration"))
         self.sm.add_widget(QRCodeScannerScreen(name="QR_code Screen"))
-        self.sm.add_widget(ScreenThree(name="screen3"))
+        self.sm.add_widget(ScreenThree(name="Membership Renewal"))
 
 
         self.dropdown = DropDown()
-        screens = [("Subscription Form", "HomeScreen"), ("QR_code Screen", "QR_code Screen"), ("Screen 3", "screen3")]
+        screens = [("Membership Registration", "Membership Registration"), ("QR_code Screen", "QR_code Screen"), ("Membership Renewal", "Membership Renewal")]
 
         self.selected_button = None
 
@@ -40,7 +40,7 @@ class PowerPlanner(App):
             self.dropdown.add_widget(btn)
 
         # Main button to trigger the dropdown
-        main_button = Button(text="Select Screen", size_hint=(None, None), size=(150, 44))
+        main_button = Button(text="Select Screen", size_hint=(None, None), size=(180, 44))
         main_button.bind(on_release=self.dropdown.open)
 
 
