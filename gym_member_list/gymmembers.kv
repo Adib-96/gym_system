@@ -79,11 +79,22 @@
     ############### Display data ###############
     GridLayout:
         size_hint: 1,0.1
-        cols: 4
+        cols: 5
+        Label:
+            text: 'Id'
+            bold: True
+            color: 0,0.5,1,1
+            size_hint: 1,None
+            height: 50
+            canvas:
+                Color: 
+                    rgba: 0.133, 0.200, 0.231, 0.2
+                Rectangle: 
+                    pos: self.pos
+                    size: self.size
         Label:
             text: 'Username'
             bold: True
-
             color: 0,0.5,1,1
             size_hint: 1,None
             height: 50
@@ -107,7 +118,6 @@
         Label:
             text: 'Subscription Method'
             bold: True
-
             size_hint: 1,None
             height: 50
             color: 0,0.5,1,1
@@ -133,7 +143,7 @@
         size_hint: 1, 0.4
         GridLayout:
             id: user_display
-            cols: 4
+            cols: 5
             size_hint_y: None
             height: self.minimum_height
             row_default_height: '80dp'

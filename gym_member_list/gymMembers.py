@@ -3,6 +3,7 @@ from kivy.uix.behaviors.touchripple import Color
 from kivy.uix.actionbar import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
+from kivy.core.clipboard import Clipboard
 
 
 class GymMembers(BoxLayout):
@@ -10,26 +11,35 @@ class GymMembers(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.users = [
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "hmida", "activity": "CROSSFIT", "subscription": "20_session"},
-            {"username": "samir", "activity": "MARTIAL_ARTS", "subscription": "30_session"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1547344444764,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
+
         ]
     def collect_filters(self):
         username = self.ids.username_filter.text
@@ -59,9 +69,16 @@ class GymMembers(BoxLayout):
         ## clear old dataaaaa
         self.ids.user_display.clear_widgets()
         
-        
         ##? here we gonna pull data from sqlite and push it down
         for user in self.users:
+            lb0 = Label(text=str(user['id']), size_hint_y=None, height=50,font_size=16)
+            lb0.bind(on_touch_down=self.copy_to_clipboard)
+            with lb0.canvas.before:
+                Color(0.776, 0.675, 0.561, 1)
+                Rectangle(size=lb0.size, pos=lb0.pos)
+            lb0.bind(size=self.update_rect, pos=self.update_rect)
+            
+            
             lb1 = Label(text=user['username'], size_hint_y=None, height=50,font_size=16)
             with lb1.canvas.before:
                 Color(0.776, 0.675, 0.561, 1)
@@ -85,6 +102,8 @@ class GymMembers(BoxLayout):
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb4.bind(size=self.update_rect, pos=self.update_rect)
+            
+            self.ids.user_display.add_widget(lb0)
             self.ids.user_display.add_widget(lb1)
             self.ids.user_display.add_widget(lb2)
             self.ids.user_display.add_widget(lb3)
@@ -95,6 +114,14 @@ class GymMembers(BoxLayout):
         with instance.canvas.before:
             Color(0.918, 0.878, 0.835, 0.2)
             Rectangle(size=instance.size, pos=instance.pos)
+            
+    ## instance = the label copied
+    def copy_to_clipboard(self, instance, touch):
+        print(instance)
+        if instance.collide_point(*touch.pos):
+            # Copy the text from the label to the clipboard
+            Clipboard.copy(instance.text)
+            print("Text copied to clipboard:", instance.text)
 
 
 class MembersDisplay(Screen):
