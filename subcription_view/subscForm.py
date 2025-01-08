@@ -49,8 +49,8 @@ class MainLayout(BoxLayout):
         self.user_info['name'] = name
         self.user_info['age'] = age
         self.user_info['email'] = email
-        self.user_info['activity'] = str.lower(activity) 
-        self.user_info['sub_methode'] = sub_methode
+        self.user_info['activity'] = "nothing" if activity is None else str.lower(activity) 
+        self.user_info['sub_methode'] = "nothing" if sub_methode is None else str.lower(sub_methode)
         self.user_info['date'] = datetime.now().strftime("%Y/%m/%d")
 
         ## show the popup
