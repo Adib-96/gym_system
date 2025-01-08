@@ -1,9 +1,8 @@
 from kivy.uix.effectwidget import Rectangle
 from kivy.uix.behaviors.touchripple import Color
 from kivy.uix.actionbar import Label
-from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-
+from kivy.uix.screenmanager import Screen
 
 
 class GymMembers(BoxLayout):
@@ -63,25 +62,25 @@ class GymMembers(BoxLayout):
         
         ##? here we gonna pull data from sqlite and push it down
         for user in self.users:
-            lb1 = Label(text=user['username'], size_hint_y=None, height=40,font_size=16)
+            lb1 = Label(text=user['username'], size_hint_y=None, height=50,font_size=16)
             with lb1.canvas.before:
                 Color(0.776, 0.675, 0.561, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb1.bind(size=self.update_rect, pos=self.update_rect)
 
-            lb2 = Label(text=user['activity'], size_hint_y=None, height=40,font_size=16)
+            lb2 = Label(text=user['activity'], size_hint_y=None, height=50,font_size=16)
             with lb2.canvas.before:
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb2.bind(size=self.update_rect, pos=self.update_rect)
 
-            lb3 = Label(text=user['subscription'], size_hint_y=None, height=40,font_size=16)
+            lb3 = Label(text=user['subscription'], size_hint_y=None, height=50,font_size=16)
             with lb3.canvas.before:
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb3.bind(size=self.update_rect, pos=self.update_rect)
 
-            lb4 = Label(text="ExpDate/RemainingSessions", size_hint_y=None, height=40,font_size=16)
+            lb4 = Label(text="ExpDate/RemainingSessions", size_hint_y=None, height=50,font_size=16)
             with lb4.canvas.before:
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
@@ -98,11 +97,7 @@ class GymMembers(BoxLayout):
             Rectangle(size=instance.size, pos=instance.pos)
 
 
-class GymMembersApp(App):
-    def build(self):
-        return GymMembers()
-
-
-if __name__ == '__main__':
-    app = GymMembersApp()
-    app.run()
+class GymMembersApp(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(GymMembers())

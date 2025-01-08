@@ -2,6 +2,12 @@
     orientation: "vertical"
     padding: 15
     spacing: 20
+    canvas:
+        Color: 
+            rgba: (0.2, 0.21, 0.2, 1)
+        Rectangle: 
+            pos: self.pos
+            size: self.size
     ########### Filter by Username ###########
     BoxLayout:
         size_hint: 1, 0.05
@@ -9,9 +15,11 @@
         Label:
             text: "Filter By Username:"
         TextInput:
+            size_hint: 1,0.76
             id: username_filter
             hint_text: "Enter username"
             multiline: False
+            font_size: 20
 
     ######## Filter by Activity #########
     BoxLayout:
