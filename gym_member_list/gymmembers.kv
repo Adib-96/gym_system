@@ -2,10 +2,9 @@
     orientation: "vertical"
     padding: 15
     spacing: 20
-
     ########### Filter by Username ###########
     BoxLayout:
-        size_hint: 1, 0.1
+        size_hint: 1, 0.05
         orientation: "horizontal"
         Label:
             text: "Filter By Username:"
@@ -17,51 +16,117 @@
     ######## Filter by Activity #########
     BoxLayout:
         orientation: "horizontal"
-        size_hint: 1, 0.1
+        size_hint: 1, 0.05
         Label:
             text: "Filter By Activity:"
         BoxLayout:
             orientation: "horizontal"
             spacing: 10
             Label:
-                text: "BodyBuilding"
+                text: "BODYBUILDING"
             CheckBox:
                 group: 'activity'
-                id: bodybuilding_field
+                id: bodybuilding
             Label:
-                text: "Karate"
+                text: "CROSSFIT"
             CheckBox:
                 group: 'activity'
-                id: karate_field
+                id: crossfit
             Label:
-                text: "Aerobic"
+                text: "MARTIAL_ARTS"
             CheckBox:
                 group: 'activity'
-                id: aerobic_field
+                id: martial_arts
 
     ######## Filter by Subscription Method ########
     BoxLayout:
         orientation: "horizontal"
-        size_hint: 1, 0.1
+        size_hint: 1, 0.05
         Label:
             text: "Filter By Subscription Method:"
-        TextInput:
-            id: subscription_filter
-            hint_text: "Enter subscription method"
-            multiline: False
-
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+            Label:
+                text: "Monthly"
+            CheckBox:
+                group: 'subcription_methode'
+                id: monthly
+            Label:
+                text: "20_session"
+            CheckBox:
+                group: 'subcription_methode'
+                id: session_20
+            Label:
+                text: "30_session"
+            CheckBox:
+                group: 'subcription_methode'
+                id: session_30
     Button:
         text: "Apply Filters"
-        size_hint: 0.4, 0.1
+        size_hint: 0.4, 0.05
         pos_hint: {"x": 0.55}
+        on_press: root.collect_filters()
 
-    ############### Data Display ###############
-    RecycleView:
-        viewclass: 'Label'
-        data: [{'text': f'user_name : adib, age : 29 - {x}', 'bg_color': (0.2, 0.4, 0.6, 1) if x % 2 == 0 else (0.4, 0.6, 0.8, 1)}for x in range(20)]
-        RecycleBoxLayout:
-            default_size: None, dp(96)
-            default_size_hint: 1, None
+    ############### Display data ###############
+    GridLayout:
+        size_hint: 1,0.1
+        cols: 4
+        Label:
+            text: 'Username'
+            bold: True
+
+            color: 0,0.5,1,1
+            size_hint: 1,None
+            height: 50
+            canvas:
+                Color: 
+                    rgba: 0.133, 0.200, 0.231, 0.2
+                Rectangle: 
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: 'Activity'
+            bold: True
+            size_hint: 1,None
+            height: 50
+            canvas:
+                Color: 
+                    rgba: [0.918, 0.878, 0.835, 0.2]
+                Rectangle: 
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: 'Subscription Method'
+            bold: True
+
+            size_hint: 1,None
+            height: 50
+            color: 0,0.5,1,1
+            canvas:
+                Color: 
+                    rgba: 0.133, 0.200, 0.231, 0.2
+                Rectangle: 
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: 'ExpDate/RemainingSessions'
+            bold: True
+
+            size_hint: 1,None
+            height: 50
+            canvas:
+                Color: 
+                    rgba: [0.918, 0.878, 0.835, 0.2]
+                Rectangle: 
+                    pos: self.pos
+                    size: self.size
+    ScrollView:
+        size_hint: 1, 0.4
+        GridLayout:
+            id: user_display
+            cols: 4
             size_hint_y: None
             height: self.minimum_height
-            orientation: 'vertical'
+            row_default_height: '80dp'
+            row_force_default: True
