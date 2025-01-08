@@ -5,7 +5,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from subcription_view.subscForm import HomeScreen
 from scan_view.scan_view import QRCodeScannerScreen
-from gym_member_list.gymMembers import GymMembersApp
+from gym_member_list.gymMembers import MembersDisplay
 from kivy.lang.builder import Builder
 
 
@@ -19,11 +19,12 @@ class PowerPlanner(App):
         self.sm = ScreenManager(transition=SlideTransition())
         self.sm.add_widget(HomeScreen(name="Membership Registration"))
         self.sm.add_widget(QRCodeScannerScreen(name="QR_code Screen"))
-        self.sm.add_widget(GymMembersApp(name="Membership Renewal"))
+        self.sm.add_widget(MembersDisplay(name="MembersDisplay"))
+        # self.sm.add_widget(MembersDisplay(name="Membership Renewal"))
 
 
         self.dropdown = DropDown()
-        screens = [("Membership Registration", "Membership Registration"), ("QR_code Screen", "QR_code Screen"), ("Membership Renewal", "Membership Renewal")]
+        screens = [("Membership Registration", "Membership Registration"), ("QR_code Screen", "QR_code Screen"), ("MembersDisplay", "MembersDisplay")]
 
         self.selected_button = None
 
