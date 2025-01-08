@@ -97,7 +97,7 @@ class GymMembers(BoxLayout):
             Rectangle(size=instance.size, pos=instance.pos)
 
 
-class GymMembersApp(Screen):
+class MembersDisplay(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.add_widget(GymMembers())

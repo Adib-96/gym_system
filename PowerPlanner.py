@@ -1,23 +1,16 @@
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen,SlideTransition
+from kivy.uix.screenmanager import ScreenManager,SlideTransition
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
 from subcription_view.subscForm import HomeScreen
 from scan_view.scan_view import QRCodeScannerScreen
+from gym_member_list.gymMembers import GymMembersApp
 from kivy.lang.builder import Builder
 
 
 Builder.load_file("subcription_view/homescreen.kv")
-
-
-
-
-class ScreenThree(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(Label(text="Welcome to Screen 3"))
+Builder.load_file("gym_member_list/gymmembers.kv")
 
 
 class PowerPlanner(App):
@@ -26,7 +19,7 @@ class PowerPlanner(App):
         self.sm = ScreenManager(transition=SlideTransition())
         self.sm.add_widget(HomeScreen(name="Membership Registration"))
         self.sm.add_widget(QRCodeScannerScreen(name="QR_code Screen"))
-        self.sm.add_widget(ScreenThree(name="Membership Renewal"))
+        self.sm.add_widget(GymMembersApp(name="Membership Renewal"))
 
 
         self.dropdown = DropDown()
