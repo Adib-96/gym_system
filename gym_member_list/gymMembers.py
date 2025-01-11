@@ -10,39 +10,14 @@ class GymMembers(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.users = [
-            {"id":1547344444764,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-            {"id":1,"username": "adib", "activity": "BODYBUILDING", "subscription": "Monthly"},
-
-        ]
+        
+        #populate it with data from DB
+        self.users = []
+        
+        
+        
     def collect_filters(self):
-        username = self.ids.username_filter.text
+        username = self.ids.username_filter.text.strip()
         selected_activities = []
         if self.ids.bodybuilding.active:
             selected_activities.append("bodybuilding")
@@ -61,11 +36,15 @@ class GymMembers(BoxLayout):
             selected_methods.append("30_session")
         
         #!!!!!!!!!!!!!!!!!!!!!!!!
-        self.display_data()
+        
+        self.display_data(username=username,activity=selected_activities,subscription_method = selected_methods)
         #!!!!!!!!!!!!!!!!!!!!!!!!
         
         
-    def display_data(self):
+    def display_data(self,**kwargs):
+        # object destructring 
+        username,activity,subscription_method = kwargs
+        
         ## clear old dataaaaa
         self.ids.user_display.clear_widgets()
         
