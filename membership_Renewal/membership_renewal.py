@@ -1,18 +1,18 @@
-from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
+from kivy.uix.screenmanager import Screen
 
+class RenewalWidget(BoxLayout):
+    def print_selected_subscription(self):
+        if self.ids.monthly.active:
+            print("Monthly")
+        elif self.ids.s_20.active:
+            print("20 Sessions")
+        elif self.ids.s_30.active:
+            print("30 Sessions")
+        else:
+            print("No subscription selected.")
 
-class RenewalScreen(BoxLayout):
-        def resubscribe(self):
-            print("clicke")
-
-
-class MyApp(App):
-
-    def build(self):
-        return RenewalScreen()
-
-if __name__ == "__main__":
-    app = MyApp()
-    app.run()
+class Renewal(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(RenewalWidget())
