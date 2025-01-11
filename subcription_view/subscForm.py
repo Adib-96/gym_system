@@ -9,6 +9,10 @@ from datetime import datetime
 from kivy.uix.screenmanager import Screen
 import uuid
 from utils.encod_decod_QR import generate_qrcode
+from warehouse.database import create_member
+from warehouse.database import create_new_subscription
+from datetime import datetime,timedelta
+
 
 
 # Set configuration
@@ -67,7 +71,39 @@ class MainLayout(BoxLayout):
         #generate user id
         user_id = str(uuid.uuid4())
         self.user_info['id'] = user_id
-
+        
+        
+        #!-------------------- add user_info to DB------------------------------------------------------------------------------------
+        create_member(user_id=self.user_info['id'],name=self.user_info['name'],age=self.user_info['age'],email=self.user_info['email'])
+        #* Monthly Subscription
+        if self.user_info["sub_methode"] == "monthly":
+            end_date = datetime.strptime(self.user_info["date"], '%Y/%m/%d') + timedelta(days=30)
+            formatted_end_data = end_date.strftime('%Y/%m/%d')
+            create_new_subscription(
+                                    member_id=self.user_info['id'],
+                                    subscription_method=self.user_info['sub_methode'],
+                                    subscription_start_dt=self.user_info['date'],
+                                    subscription_end_dt=formatted_end_data,
+                                    remaining_sessions=None,
+                                    activity=self.user_info["activity"]
+                                    )
+        else:
+            sessions = None
+            subscription_methode = self.user_info['sub_methode']
+            if subscription_methode == "20_session":
+                sessions = 20
+            else:
+                sessions = 30
+            create_new_subscription(
+                                    member_id=self.user_info['id'],
+                                    subscription_method=subscription_methode,
+                                    subscription_start_dt=self.user_info['date'],
+                                    subscription_end_dt=None,
+                                    remaining_sessions=sessions,
+                                    activity=self.user_info["activity"]
+                                    )
+        #!-------------------- add user_info to DB------------------------------------------------------------------------------------
+        
         ###############################***********************###################################
         print(self.user_info)
         ###############################***********************###################################
