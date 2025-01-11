@@ -1,0 +1,72 @@
+<RenewalScreen>:
+        orientation: 'vertical'
+        padding: 20
+        Label:
+                text: 'Resubscription'
+                font_size: '24sp'
+                size_hint_y: 0.05
+        Label:
+                text: 'ID:'
+                font_size:"20sp"
+                size_hint_y: 0.03
+                pos_hint: {"center_x":0.21}
+        TextInput:
+                id: id_input
+                hint_text: 'Enter your ID'
+                font_size:"24sp"
+                size_hint_y: 0.013
+                size_hint_x: 0.6
+                pos_hint: {"center_x":0.5}
+        Label:
+                text: 'Change Subscription Method ? :'
+                font_size:"20sp"
+                size_hint_y: 0.03
+                pos_hint: {"center_x":0.313}
+        #####################################
+        BoxLayout:
+                orientation: "vertical"
+                size_hint_y: 0.04
+                BoxLayout:
+                        orientation: 'horizontal'
+                        padding: [220, 0, 0, 0]
+                        
+                        CheckBox:
+                                group: 'subcription_methode'
+                                id: monthly
+                                size_hint: (None,None)
+                        Label:
+                                text: "Monthly"
+                                size_hint: (None,None)
+                                padding: 10
+                BoxLayout:
+                        orientation: 'horizontal'
+                        padding: [220, 0, 0, 0]
+
+                        CheckBox:
+                                group: 'subcription_methode'
+                                id: session_20
+                                size_hint: (None,None)
+                        Label:
+                                padding: 10
+                                text: "20_session"
+                                size_hint: (None,None)
+                BoxLayout:
+                        orientation: 'horizontal'
+                        padding: [220, 0, 0, 0]
+                        CheckBox:
+                                group: 'subcription_methode'
+                                id: session_30
+                                size_hint: (None,None)
+                        Label:
+                                padding: 10
+                                text: "30_session"
+                                size_hint: (None,None)
+        ######################################
+        Button:
+                padding: 20
+                text: 'Reactivate Membership'
+                size_hint_y: 0.02
+                size_hint_x: None
+                width: 400
+                pos_hint: {"center_x":0.35}
+                on_press: root.resubscribe()
