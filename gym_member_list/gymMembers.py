@@ -11,10 +11,8 @@ class GymMembers(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-        #populate it with data from DB
+        #Todo fetch data from DB
         self.users = []
-        
-        
         
     def collect_filters(self):
         username = self.ids.username_filter.text.strip()
