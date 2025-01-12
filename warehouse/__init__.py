@@ -26,7 +26,7 @@ tables_statment = [
         subscription_start_date DATE NOT NULL,
         subscription_end_date DATE,  -- Only applicable for monthly subscriptions,
         remaining_sessions INTEGER,  -- Only applicable for session-based subscriptions,
-        FOREIGN KEY (member_id) REFERENCES users(user_id),
+        FOREIGN KEY (member_id) REFERENCES members(user_id),
         FOREIGN KEY (activity_id) REFERENCES activities(id)
     );
     """,
@@ -35,8 +35,15 @@ tables_statment = [
         member_id TEXT NOT NULL,
         visit_date DATE NOT NULL,
         activity_id INTEGER NOT NULL,
-        FOREIGN KEY (member_id) REFERENCES users(user_id),
+        FOREIGN KEY (member_id) REFERENCES members(user_id),
         FOREIGN KEY (activity_id) REFERENCES activities(id)
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS user_hmac (
+        member_id TEXT NOT NULL,
+        HMAC BLOB NOT NULL,
+        PRIMARY KEY (member_id),
+        FOREIGN KEY (member_id) REFERENCES members(user_id)
     );
     """
 ]
