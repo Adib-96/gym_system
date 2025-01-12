@@ -1,10 +1,11 @@
 import os
+import sqlite3
 from dotenv import load_dotenv
 import qrcode
 import hmac
 import hashlib
 import base64
-
+#from warehouse.database import insert_user_hmac
 #! Load .env variables
 load_dotenv()
 key = os.getenv("QR_SECRET_KEY","waywa")
@@ -24,7 +25,12 @@ def generate_qrcode(member_id):
         box_size=6,
         border=4
     )
-
+    #? add this credentials to DB
+    print(encoded_data)
+    #insert_user_hmac(member_id=member_id,encoded_data=encoded_data)
+    
+    #? ensure the qr_images exist
+    os.makedirs('./qr_images',exist_ok=True)
     qr.add_data(encoded_data)
     qr.make(fit=True)
 
@@ -33,30 +39,19 @@ def generate_qrcode(member_id):
 
 
 
-#* call this function into the scan view module 
-def decode_and_verify_qr_data(encoded_data,id_member):
+#* call this function into the scan view module ( the encoded data input will be taken from phone and scan it with desktop Webcame)
+def decode_and_verify_qr_data(encoded_data):
+    sql_statment_to_extract_HMAC = "SELECT member_id FROM user_hmac WHERE HMAC=?"
+    
     try:
-
-        hashed_data = base64.urlsafe_b64decode(encoded_data)
-
-        data = f'{id_member}'.encode('utf-8')
-        expected_hmac= hmac.new(key.encode('utf-8'),data,hashlib.sha512).digest()
-
-        if hashed_data == expected_hmac:
-            print(f"QR code for {id_member} is correct.")
-        else:
-            print(f"QR code for {id_member} is not correct.")
-
-    except Exception as e:
-        print(f'Error during decoding or verification :{e}')
+        with sqlite3.connect('../warehouse.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute(sql_statment_to_extract_HMAC,(encoded_data,))
+            user_id = cursor.fetchone()
+            print(user_id)
+    
+    except sqlite3.OperationalError as oe:
+        print('Eroor ',oe)
 
 
-
-"""
-? for testing purpose ;)
-encoded_data_from_qr = "K2oKpTVKV8a694k-OH5CjCRIGZlgg2o4LGeUKpHHpyJY4GPEFIbag3UggpWrHlNSCTjQenOHnIWZkscbwGJUAQ=="
-member_id= 'b0665f1f-ae52-44f8-bfcc-799515901993'
-
-
-decode_and_verify_qr_data(encoded_data_from_qr, member_id)
-"""
+decode_and_verify_qr_data("MT7Auxz4q047IripRmqhNMWD2h77EMvQ8HYTGAhp_Xpj5NoUg4-YrUoh_dFLOU--9KOEFun7okX-h_ZQjVy3tg==")
