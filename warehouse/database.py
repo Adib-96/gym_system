@@ -113,3 +113,18 @@ def update_member_entry(member_id):
 
 
 # update_member_entry('824518f0-653e-4153-b9ea-9d9bcae8337a')
+
+
+#! Funtion to write into user_hmac table and we will call it into the encode function ([./utils/encod_decod_QR.py]) 
+def insert_user_hmac(member_id,encoded_data):
+    sql_statment = "INSERT INTO user_hmac (member_id, HMAC) VALUES (?, ?)"
+    try:
+        with sqlite3.connect('warehouse.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute(sql_statment,(member_id,encoded_data))
+            conn.commit()
+    except sqlite3.OperationalError as err:
+        print("Error ",err)
+    finally:
+        conn.close()
+        
