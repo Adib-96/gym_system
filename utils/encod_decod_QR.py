@@ -5,7 +5,7 @@ import qrcode
 import hmac
 import hashlib
 import base64
-#from warehouse.database import insert_user_hmac
+from warehouse.database import insert_user_hmac
 #! Load .env variables
 load_dotenv()
 key = os.getenv("QR_SECRET_KEY","waywa")
@@ -27,7 +27,8 @@ def generate_qrcode(member_id):
     )
     #? add this credentials to DB
     print(encoded_data)
-    #insert_user_hmac(member_id=member_id,encoded_data=encoded_data)
+    
+    insert_user_hmac(member_id=member_id,encoded_data=encoded_data)
     
     #? ensure the qr_images exist
     os.makedirs('./qr_images',exist_ok=True)
