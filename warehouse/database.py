@@ -79,11 +79,13 @@ def update_member_entry(member_id):
             
             if datetime.now() > subscription_end_date:
                 print("Monthly subscription expired. Extending for another month.")
+                #!------------extend for another month-----------------
                 new_end_date = datetime.now() + timedelta(days=30)
                 cursor.execute(
                     "UPDATE subscriptions SET subscription_end_date=? WHERE member_id=? AND activity_id=?", 
                     (new_end_date.strftime("%Y-%m-%d"), member_id, activity_id)
                 )
+                #!------------extend for another month-----------------
             else:
                 print("Monthly subscription still active.")
         
