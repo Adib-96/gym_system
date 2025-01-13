@@ -7,7 +7,7 @@ import sqlite3
 
 tables_statment = [
     """CREATE TABLE IF NOT EXISTS members(
-        user_id TEXT PRIMARY KEY,
+        member_id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         age INTEGER NOT NULL,
         email TEXT NOT NULL UNIQUE
@@ -43,7 +43,7 @@ tables_statment = [
         member_id TEXT NOT NULL,
         HMAC BLOB NOT NULL,
         PRIMARY KEY (member_id),
-        FOREIGN KEY (member_id) REFERENCES members(user_id)
+        FOREIGN KEY (member_id) REFERENCES subscriptions(member_id)
     );
     """
 ]
