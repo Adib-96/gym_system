@@ -5,13 +5,19 @@ import qrcode
 import hmac
 import hashlib
 import base64
-from warehouse.database import insert_user_hmac
+#from warehouse.database import insert_user_hmac
 #! Load .env variables
 load_dotenv()
 key = os.getenv("QR_SECRET_KEY","waywa")
 
 
 def generate_qrcode(member_id):
+    
+    
+    if not key :
+        raise ValueError('QR_SECRET_KEY not set in environment varibales.')
+    
+    
     data = f"{member_id}".encode('utf-8')
     # Create HMAC object and hash the data
     hmac_obj = hmac.new(key.encode('utf-8'), data, hashlib.sha512)  # Ensure key is encoded
@@ -53,6 +59,3 @@ def decode_and_verify_qr_data(encoded_data):
     
     except sqlite3.OperationalError as oe:
         print('Eroor ',oe)
-
-
-decode_and_verify_qr_data("MT7Auxz4q047IripRmqhNMWD2h77EMvQ8HYTGAhp_Xpj5NoUg4-YrUoh_dFLOU--9KOEFun7okX-h_ZQjVy3tg==")
