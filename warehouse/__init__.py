@@ -15,7 +15,7 @@ tables_statment = [
     """,
     """CREATE TABLE IF NOT EXISTS activities(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL CHECK(name IN('bodybuilding', 'crossfit', 'mixed_arts'))
+        activity_name TEXT NOT NULL CHECK(activity_name IN('bodybuilding', 'crossfit', 'mixed_arts'))
     );
     """,
     """CREATE TABLE IF NOT EXISTS subscriptions(
@@ -70,12 +70,12 @@ def create_activity(activity):
         with sqlite3.connect('warehouse.db') as conn:
             cursor = conn.cursor()
             #! Check if activity already exists before inserting
-            cursor.execute('SELECT id FROM activities WHERE name = ?', (activity,))
+            cursor.execute('SELECT id FROM activities WHERE activity_name = ?', (activity,))
             existing_activity = cursor.fetchone()
             if existing_activity:
                 print(f"Activity '{activity}' already exists. Skipping insertion.")
             else:
-                cursor.execute('''INSERT INTO activities(name) VALUES(?)''', (activity,))
+                cursor.execute('''INSERT INTO activities(activity_name) VALUES(?)''', (activity,))
                 conn.commit()
                 print(f"Successfully inserted activity: {activity}")
     except sqlite3.OperationalError as e:
