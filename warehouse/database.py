@@ -9,9 +9,9 @@ def create_member(**kwargs):
         with sqlite3.connect('warehouse.db') as conn:
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO members (user_id, name, age, email)
+                INSERT INTO members (member_id, name, age, email)
                 VALUES (?, ?, ?, ?)
-            ''', (kwargs['user_id'],kwargs['name'],kwargs["age"],kwargs["email"]))
+            ''', (kwargs['member_id'],kwargs['name'],kwargs["age"],kwargs["email"]))
             conn.commit()  # Commit the transaction
             print("User data inserted successfully.")
     except sqlite3.OperationalError as e:
@@ -27,7 +27,7 @@ def create_member(**kwargs):
 #? this function will be called for new GYM subscriber(remaining_session(monthly=None,20_session=20,30_session=30))
 def create_new_subscription(**kwargs):
     activity_id = None
-    query_to_fetch_activity_id = "SELECT id FROM activities WHERE name = ?"
+    query_to_fetch_activity_id = "SELECT id FROM activities WHERE activity_name = ?"
     activity = kwargs["activity"]
     try:
         with sqlite3.connect('warehouse.db') as conn:
@@ -99,6 +99,7 @@ def update_member_entry(member_id):
                     (remaining_sessions, member_id, activity_id)
                 )
                 if remaining_sessions == 0:
+                    #TODO we gonna ask member about renewal
                     print("Session-based subscription used up. Please renew.")
             else:
                 print("No remaining sessions. Entry not allowed.")
@@ -127,6 +128,21 @@ def insert_user_hmac(member_id,encoded_data):
             conn.commit()
     except sqlite3.OperationalError as err:
         print("Error ",err)
-    finally:
-        conn.close()
+    # finally:
+    #     conn.close()
         
+
+
+
+def fetch_all(**kwargs):
+    sql_statments ="SELECT member_id, name,activity_name,subscription_method,sbscription_end_date,remaining_sessions"
+    
+    try:
+        with sqlite3.connect('warehouse.db') as conn:
+            cursor = conn.cursor()
+            
+            for statment in sql_statments:
+                cursor.execute(statment)
+            conn.commit()
+    except sqlite3.OperationalError as err:
+        print('Erro ',err)
