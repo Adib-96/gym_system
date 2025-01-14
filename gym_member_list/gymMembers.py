@@ -5,7 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.core.clipboard import Clipboard
 from kivy.uix.image import Image
-
+from warehouse.database import fetch_all
 
 class GymMembers(BoxLayout):
     
@@ -47,6 +47,7 @@ class GymMembers(BoxLayout):
         #!!!!!!!!!!!!!!!!!!!!!!!!
         #TodoDISPLAY_DATA(id,username,activity,subscription_methode,end_date,remaining_session)|
         self.display_data()
+        fetch_all()
         #!!!!!!!!!!!!!!!!!!!!!!!!
         
         
@@ -92,7 +93,7 @@ class GymMembers(BoxLayout):
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb3.bind(size=self.update_rect, pos=self.update_rect)
 
-            img = Image(source="button.png" ,fit_mode="scale-down",size_hint= (None, None),size=(100,50))
+            img = Image(source="button.png" ,fit_mode="scale-down",size_hint= (None, None),size=(280,50))
             with img.canvas.before:
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
