@@ -134,15 +134,32 @@ def insert_user_hmac(member_id,encoded_data):
 
 
 
+import sqlite3
+
 def fetch_all(**kwargs):
-    sql_statments ="SELECT member_id, name,activity_name,subscription_method,sbscription_end_date,remaining_sessions"
+    sql_statement = """
+    SELECT 
+        members.member_id,
+        members.name,
+        activities.activity_name,
+        subscriptions.subscription_method,
+        subscriptions.subscription_end_date,
+        subscriptions.remaining_sessions
+    FROM 
+        members
+    INNER JOIN 
+        subscriptions ON subscriptions.member_id = members.member_id
+    INNER JOIN 
+        activities ON activities.id = subscriptions.activity_id;
+    """
     
     try:
         with sqlite3.connect('warehouse.db') as conn:
             cursor = conn.cursor()
-            
-            for statment in sql_statments:
-                cursor.execute(statment)
-            conn.commit()
+            cursor.execute(sql_statement)
+            results = cursor.fetchall()
+            print(results)
+            return results
     except sqlite3.OperationalError as err:
-        print('Erro ',err)
+        print('Error:', err)
+        return None
