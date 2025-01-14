@@ -74,7 +74,7 @@ class MainLayout(BoxLayout):
         
         
         #!-------------------- add user_info to DB------------------------------------------------------------------------------------
-        create_member(user_id=self.user_info['id'],name=self.user_info['name'],age=self.user_info['age'],email=self.user_info['email'])
+        create_member(member_id=self.user_info['id'],name=self.user_info['name'],age=self.user_info['age'],email=self.user_info['email'])
         #* Monthly Subscription
         if self.user_info["sub_methode"] == "monthly":
             end_date = datetime.strptime(self.user_info["date"], '%Y/%m/%d') + timedelta(days=30)
