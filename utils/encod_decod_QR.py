@@ -5,7 +5,7 @@ import qrcode
 import hmac
 import hashlib
 import base64
-#from warehouse.database import insert_user_hmac
+from warehouse.database import insert_user_hmac
 #! Load .env variables
 load_dotenv()
 key = os.getenv("QR_SECRET_KEY","waywa")
@@ -54,8 +54,9 @@ def decode_and_verify_qr_data(encoded_data):
         with sqlite3.connect('../warehouse.db') as conn:
             cursor = conn.cursor()
             cursor.execute(sql_statment_to_extract_HMAC,(encoded_data,))
+            #!! user_id here will return a tuple
             user_id = cursor.fetchone()
-            print(user_id)
+            print(user_id[0])
     
     except sqlite3.OperationalError as oe:
         print('Eroor ',oe)
