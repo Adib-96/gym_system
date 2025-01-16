@@ -7,7 +7,7 @@ from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 import cv2
 from pyzbar.pyzbar import decode
-
+from utils.encod_decod_QR import decode_and_verify_qr_data
 
 class QRCodeScannerScreen(Screen):
     def __init__(self, **kwargs):
@@ -15,7 +15,7 @@ class QRCodeScannerScreen(Screen):
         self.layout = BoxLayout(orientation='vertical')
         self.img = Image(size_hint=(1, 0.8))
         self.layout.add_widget(self.img)
-        self.message = Button(text="No QR Code Detected", size_hint=(1, 0.2))
+        self.message = Button(text="No QR Code Detected",font_size='24sp' ,size_hint=(1, 0.2))
         self.layout.add_widget(self.message)
         self.add_widget(self.layout)
         self.capture = None
@@ -42,5 +42,6 @@ class QRCodeScannerScreen(Screen):
             # Decode QR codes in the frame and print (Entry allowed or access denied)
             for code in decode(frame):
                 qr_data = code.data.decode('utf-8')
-                self.message.text = f"QR Code Detected: {qr_data}"
-                print(f"QR Code: {qr_data}")  # Handle the detected QR code data
+                
+                user_name = decode_and_verify_qr_data(qr_data)
+                self.message.text = f"Hello {user_name}"
