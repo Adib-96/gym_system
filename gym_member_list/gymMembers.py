@@ -13,7 +13,7 @@ class GymMembers(BoxLayout):
         super().__init__(**kwargs)
         
         #Todo fetch data from DB
-        self.users = [{},{},{}]
+        self.members = []
         
     def collect_filters(self):
         
@@ -46,28 +46,23 @@ class GymMembers(BoxLayout):
         
         #!!!!!!!!!!!!!!!!!!!!!!!!
         #TodoDISPLAY_DATA(id,username,activity,subscription_methode,end_date,remaining_session)|
+        members = fetch_all()
+        self.members = members
         self.display_data()
-        fetch_all()
+
         #!!!!!!!!!!!!!!!!!!!!!!!!
         
         
-    def display_data(self,**kwargs):
-        
-        member_id = kwargs.get('member_id')
-        username = kwargs.get('username')
-        activity = kwargs.get('activity')
-        subscription_method = kwargs.get('subscription_method')
-        end_date = kwargs.get('end_date')
-        remainig_session = kwargs.get('remaining_session')
+    def display_data(self):
         
         
         ## clear old dataaaaa
         self.ids.user_display.clear_widgets()
         
         ##? here we gonna pull data from sqlite and push it down
-        for user in self.users:
+        for user in self.members:
             
-            lb0 = Label(text="10", size_hint_y=None, height=50,font_size=16)
+            lb0 = Label(text=user[0], size_hint=(None,None),width=350,height=50,font_size=16)
             lb0.bind(on_touch_down=self.copy_to_clipboard)
             with lb0.canvas.before:
                 Color(0.776, 0.675, 0.561, 1)
@@ -75,19 +70,19 @@ class GymMembers(BoxLayout):
             lb0.bind(size=self.update_rect, pos=self.update_rect)
             
             
-            lb1 = Label(text="adib",size_hint_y=None, height=50,font_size=16)
+            lb1 = Label(text=user[1],size_hint=(1,None), height=50,font_size=16)
             with lb1.canvas.before:
                 Color(0.776, 0.675, 0.561, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb1.bind(size=self.update_rect, pos=self.update_rect)
 
-            lb2 = Label(text="bodybulding",size_hint_y=None, height=50,font_size=16)
+            lb2 = Label(text=user[2],size_hint=(None,None), width=250,height=50,font_size=16)
             with lb2.canvas.before:
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
             lb2.bind(size=self.update_rect, pos=self.update_rect)
 
-            lb3 = Label(text="monthly" ,size_hint_y=None, height=50,font_size=16)
+            lb3 = Label(text=user[3] ,size_hint=(1,None), height=50,font_size=16,padding=[0.4,0.9,0.4,0.4])
             with lb3.canvas.before:
                 Color(0.851, 0.851, 0.851, 1)
                 Rectangle(size=lb1.size, pos=lb1.pos)
@@ -113,7 +108,6 @@ class GymMembers(BoxLayout):
             
     ## instance = the label copied
     def copy_to_clipboard(self, instance, touch):
-        print(instance)
         if instance.collide_point(*touch.pos):
             # Copy the text from the label to the clipboard
             Clipboard.copy(instance.text)
