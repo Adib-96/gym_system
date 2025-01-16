@@ -12,7 +12,7 @@ class RenewalWidget(BoxLayout):
         layout.padding = 25
         layout.spacing = 200
         
-        lbl = Label(text="Success! Your renewal was completed successfully.",font_size="25pt",color=(0.184, 0.654, 0.831, 1.0))
+        lbl = Label(text="Renewed successfully",font_size="24pt",color=(0.184, 0.654, 0.831, 1.0))
         close_button = Button(text="Close",size_hint=(None,0.3),pos_hint={"center_x":0.5},width=250)
         close_button.bind(on_press=self.close_popup)  # Bind close button to dismiss the popup
         layout.add_widget(lbl)
@@ -28,11 +28,11 @@ class RenewalWidget(BoxLayout):
         else:
             print("No subscription selected.")
         self.popup = Popup(
-            title='Subscribe Form',
+            title='Renewal',
             content=layout,
             auto_dismiss=False,
-            size_hint=(0.8, 0.8),
-            size=(200, 200)
+            size_hint=(0.7, 0.7),
+            size=(250, 250)
         )
         self.popup.open()
 
