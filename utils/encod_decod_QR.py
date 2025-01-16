@@ -32,8 +32,6 @@ def generate_qrcode(member_id):
         border=4
     )
     #? add this credentials to DB
-    print(encoded_data)
-    
     insert_user_hmac(member_id=member_id,encoded_data=encoded_data)
     
     #? ensure the qr_images exist
@@ -49,14 +47,21 @@ def generate_qrcode(member_id):
 #* call this function into the scan view module ( the encoded data input will be taken from phone and scan it with desktop Webcame)
 def decode_and_verify_qr_data(encoded_data):
     sql_statment_to_extract_HMAC = "SELECT member_id FROM user_hmac WHERE HMAC=?"
+    sql_statment_to_fetch_member_name = "SELECT name from members WHERE member_id=?"
+    sql_statment_to_fetch_date_for_monthly_subscription = "SELECT subscription_end_date from subscriptions WHERE member_id=?"
+    sql_statment_to_fetch_date_for_sessions_subscription = "SELECT remaining_sessions from subscriptions WHERE member_id=?"
     
     try:
-        with sqlite3.connect('../warehouse.db') as conn:
+        with sqlite3.connect('./warehouse.db') as conn:
             cursor = conn.cursor()
             cursor.execute(sql_statment_to_extract_HMAC,(encoded_data,))
             #!! user_id here will return a tuple
             user_id = cursor.fetchone()
-            print(user_id[0])
+            cursor.execute(sql_statment_to_fetch_member_name,(user_id[0],))
+            member_name = cursor.fetchone()
+            if user_id is None:
+                return "No matching record found for the provided HMAC."
+            return member_name[0]
     
     except sqlite3.OperationalError as oe:
         print('Eroor ',oe)
