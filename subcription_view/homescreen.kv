@@ -1,7 +1,17 @@
 <MainLayout>:
     orientation:'vertical'
-    spacing : 10
+    spacing : 30
     padding : 30
+
+    Label:
+        text:"[b]SUBSCRIPTION FORM[/b]"
+        markup:"True"
+        font_size: 26
+        color:"black"
+        size_hint:(None,None)
+        size:90,20
+        pos_hint:{"center_x":0.5}
+
 
     Label:
         text:"[b]Username*[/b]"
@@ -14,7 +24,10 @@
         id: name_input
         hint_text:"Let us know your name"
         multiline:False
-        font_size:"15pt"
+        font_size:"18pt"
+        size_hint:(1,None)
+        height:50
+        padding:10
 
     Label:
         markup:'True'
@@ -27,7 +40,11 @@
         id: age_input
         hint_text:"Let us know your age"
         multiline:False
-        font_size:"15pt"
+        font_size:"18pt"
+        size_hint:(1,None)
+        height:50
+        padding:10
+
     Label:
         markup:True
         text:'[b]Email[/b]'
@@ -39,7 +56,11 @@
         id: email_input
         hint_text:"Let us know your email"
         multiline:False
-        font_size:"15pt"
+        font_size:"18pt"
+        size_hint:(1,None)
+        height:50
+        padding:10
+
 
 ##################GYM ACTIVITY###############
     Label:
@@ -50,19 +71,21 @@
     BoxLayout:
         orientation:'horizontal'
         spacing:10
-        padding:5
 
         ToggleButton:
             id: bodybuilding
             text:"BODYBUILDING"
+            padding:25
             group:"activity"
         ToggleButton:
             id:crossfit
             text:"CROSSFIT"
+            padding:25
             group:"activity"
         ToggleButton:
             id:Mixed_Arts
             text:"MIXED_ARTS"
+            padding:25
             group:"activity"
 
 ##################SUBSCRIPTION METHODE###############
@@ -75,7 +98,6 @@
     BoxLayout:
         orientation:'horizontal'
         spacing:20
-        padding:5
 
         ToggleButton:
             text:"MONTHLY"
