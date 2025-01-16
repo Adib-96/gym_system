@@ -128,8 +128,8 @@ def insert_user_hmac(member_id,encoded_data):
             conn.commit()
     except sqlite3.OperationalError as err:
         print("Error ",err)
-    # finally:
-    #     conn.close()
+    finally:
+        conn.close()
         
 
 

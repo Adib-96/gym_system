@@ -40,9 +40,9 @@ tables_statment = [
     );
     """,
     """CREATE TABLE IF NOT EXISTS user_hmac (
-        member_id TEXT NOT NULL,
-        HMAC BLOB NOT NULL,
-        PRIMARY KEY (member_id),
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        member_id TEXT NOT NULL UNIQUE,
+        HMAC TEXT NOT NULL,
         FOREIGN KEY (member_id) REFERENCES subscriptions(member_id)
     );
     """
