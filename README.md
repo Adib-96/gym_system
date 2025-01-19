@@ -60,7 +60,7 @@ cd gym-system
 ```
 2. __Install Dependencies__: Ensure you have Python and Kivy installed. If not, install them using:
 ```bash
-pip install kivy
+pip install -r requirements.txt
 ```
 3. __Run the Application__
 ```
