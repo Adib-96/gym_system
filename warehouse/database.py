@@ -34,6 +34,8 @@ def create_new_subscription(**kwargs):
             cursor = conn.cursor()
             cursor.execute(query_to_fetch_activity_id,(activity,))
             activity_id = cursor.fetchone()
+            if activity_id is None:
+                raise sqlite3.OperationalError("ERROR")
             cursor.execute('''
                 INSERT INTO subscriptions (
                     member_id, activity_id, subscription_method, 
@@ -54,7 +56,7 @@ def create_new_subscription(**kwargs):
 
 
 
-###!this function will be used in resubscription
+#! Function used To check for valid subscricption and renewal if needed
 
 def update_member_entry(member_id):
     # Enable column-based access for better readability
@@ -78,7 +80,6 @@ def update_member_entry(member_id):
             subscription_end_date = datetime.strptime(subscription["subscription_end_date"], "%Y-%m-%d")
             
             if datetime.now() > subscription_end_date:
-                print("Monthly subscription expired. Extending for another month.")
                 #!------------extend for another month-----------------
                 new_end_date = datetime.now() + timedelta(days=30)
                 cursor.execute(
@@ -102,6 +103,7 @@ def update_member_entry(member_id):
                     #TODO we gonna ask member about renewal
                     print("Session-based subscription used up. Please renew.")
             else:
+                #!!!!!---------------------Here we gonna make the renewal for sessions methods
                 print("No remaining sessions. Entry not allowed.")
                 continue  # Skip transaction logging for this subscription
 
@@ -115,7 +117,7 @@ def update_member_entry(member_id):
     conn.close()
 
 
-# update_member_entry('824518f0-653e-4153-b9ea-9d9bcae8337a')
+
 
 
 #! Funtion to write into user_hmac table and we will call it into the encode function ([./utils/encod_decod_QR.py]) 
@@ -136,7 +138,7 @@ def insert_user_hmac(member_id,encoded_data):
 
 import sqlite3
 
-def fetch_all(**kwargs):
+def fetch_all():
     sql_statement = """
     SELECT 
         members.member_id,
@@ -157,9 +159,33 @@ def fetch_all(**kwargs):
         with sqlite3.connect('warehouse.db') as conn:
             cursor = conn.cursor()
             cursor.execute(sql_statement)
+            #array returned
             results = cursor.fetchall()
-            print(results)
             return results
     except sqlite3.OperationalError as err:
         print('Error:', err)
         return None
+
+
+
+
+#? Membership Renewal
+def membership_renewal(member_id, sub_method):
+
+    try:
+        with sqlite3.connect('warehouse.db') as conn:
+            cursor = conn.cursor()
+            if sub_method == "monthly":
+                new_date = datetime.now() + timedelta(days=30)
+                cursor.execute("UPDATE subscriptions SET subscription_end_date=? WHERE member_id=?", (new_date.strftime("%Y/%m/%d"), member_id))
+            elif sub_method == "20_session":
+                #TODO check for 0 in remaining session
+                cursor.execute("UPDATE subscriptions SET remaining_sessions=? WHERE member_id=?", (20, member_id))
+            elif sub_method == "30_session":
+                cursor.execute("UPDATE subscriptions SET remaining_sessions=? WHERE member_id=?", (30, member_id))
+
+            conn.commit()
+    except sqlite3.OperationalError as oe:
+        print('Database operation error:', oe)
+    except Exception as e:
+        print('Unexpected error:', e)

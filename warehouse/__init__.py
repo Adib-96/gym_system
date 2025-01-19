@@ -10,7 +10,7 @@ tables_statment = [
         member_id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         age INTEGER NOT NULL,
-        email TEXT NOT NULL UNIQUE
+        email TEXT NOT NULL
     );
     """,
     """CREATE TABLE IF NOT EXISTS activities(
