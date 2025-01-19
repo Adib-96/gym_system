@@ -1,7 +1,13 @@
 <MainLayout>:
     orientation:'vertical'
     spacing : 30
-    padding : 30
+    padding : 10
+    canvas:
+        Color: 
+            rgba: (0.898, 0.898, 0.898, 1)
+        Rectangle: 
+            pos: self.pos
+            size: self.size
 
     Label:
         text:"[b]SUBSCRIPTION FORM[/b]"
@@ -12,6 +18,14 @@
         size:90,20
         pos_hint:{"center_x":0.5}
 
+    Label:
+        text: ''
+        id: error_text
+        font_size: 17
+        color: "red"
+        size_hint:(None,None)
+        size:90,20
+        pos_hint:{"center_x":0.5}
 
     Label:
         text:"[b]Username*[/b]"
@@ -24,10 +38,10 @@
         id: name_input
         hint_text:"Let us know your name"
         multiline:False
-        font_size:"18pt"
-        size_hint:(1,None)
-        height:50
-        padding:10
+        font_size:"14pt"
+        padding:5
+        size_hint: (1,1)
+
 
     Label:
         markup:'True'
@@ -40,10 +54,11 @@
         id: age_input
         hint_text:"Let us know your age"
         multiline:False
-        font_size:"18pt"
-        size_hint:(1,None)
-        height:50
-        padding:10
+        font_size:"14pt"
+        padding:5
+        size_hint: (1,1)
+
+
 
     Label:
         markup:True
@@ -56,10 +71,10 @@
         id: email_input
         hint_text:"Let us know your email"
         multiline:False
-        font_size:"18pt"
-        size_hint:(1,None)
-        height:50
-        padding:10
+        font_size:"14pt"
+        padding:5
+        size_hint: (1,1)
+
 
 
 ##################GYM ACTIVITY###############
@@ -70,7 +85,8 @@
         color:'black'
     BoxLayout:
         orientation:'horizontal'
-        spacing:10
+        spacing:5
+        
 
         ToggleButton:
             id: bodybuilding
@@ -114,9 +130,9 @@
 ####################SUBMIT BUTTON######################
     Button:
         text:"Sign In"
-        font_size:"20pt"
-        color:(.2,1,.5,1)
+        font_size:"30sp"
+        color:(1.0, 0.7647, 0.0, 1)
         pos_hint: {'center_x': 0.5}
-        size_hint: .45, None
-        size: 200, 80
+        size_hint: None, None
+        size: 330, 50
         on_press:root.submit_form()

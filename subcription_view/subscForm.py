@@ -48,17 +48,27 @@ class MainLayout(BoxLayout):
             if sub_button.state == 'down':
                 sub_methode = sub_button.text.split()[0]
                 break
-
+            
+        
         ## populate user info with data
-        self.user_info['name'] = name
+        self.user_info['name'] = None if len(name) == 0 else str.lower(name)
         self.user_info['age'] = age
         self.user_info['email'] = email
-        self.user_info['activity'] = "nothing" if activity is None else str.lower(activity) 
-        self.user_info['sub_methode'] = "nothing" if sub_methode is None else str.lower(sub_methode)
+        self.user_info['activity'] = None if activity is None else str.lower(activity) 
+        self.user_info['sub_methode'] = None if sub_methode is None else str.lower(sub_methode)
         self.user_info['date'] = datetime.now().strftime("%Y/%m/%d")
-
-        ## show the popup
-        self.show_popup()
+        
+        
+        ## widgt(label) for displaying error message
+        error_submit_form = self.ids.error_text
+        ##! Handle empty Form
+        if self.user_info['name'] is not None and self.user_info['activity'] is not None and self.user_info['sub_methode'] is not None:
+            self.show_popup()
+            error_submit_form.text = ''
+        else:
+            error_submit_form.bold = True
+            error_submit_form.text = "Please fill all required fields."
+            print('You must fill the name,activity and subscription method to pass dear friend')
 
         # Reset form fields
         activ_button.state = 'normal'
@@ -68,7 +78,8 @@ class MainLayout(BoxLayout):
         self.ids.email_input.text = ""
 
     def show_popup(self):
-        #generate user id
+        
+        
         user_id = str(uuid.uuid4())
         self.user_info['id'] = user_id
         
