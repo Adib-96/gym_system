@@ -12,21 +12,24 @@
     BoxLayout:
         size_hint: 1, 0.05
         orientation: "horizontal"
+        pos_hint: {"center_x":0.45}
         Label:
-            text: "Filter By Username:"
+            text: "Search By Username:"
         TextInput:
             size_hint: 1,0.76
             id: username_filter
             hint_text: "Enter username"
             multiline: False
             font_size: 20
+            padding: 10
 
     ######## Filter by Activity #########
     BoxLayout:
         orientation: "horizontal"
         size_hint: 1, 0.05
+        pos_hint: {"center_x":0.45}
         Label:
-            text: "Filter By Activity:"
+            text: "Search By Activity:"
         BoxLayout:
             orientation: "horizontal"
             spacing: 10
@@ -50,8 +53,9 @@
     BoxLayout:
         orientation: "horizontal"
         size_hint: 1, 0.05
+        pos_hint: {"center_x":0.45}
         Label:
-            text: "Filter By Subscription Method:"
+            text: "Search By Subscription Method:"
         BoxLayout:
             orientation: "horizontal"
             spacing: 10
@@ -73,25 +77,14 @@
     Button:
         text: "Apply Filters"
         size_hint: 0.4, 0.05
-        pos_hint: {"x": 0.55}
+        pos_hint: {"center_x": 0.70}
+        font_size: "18sp"
         on_press: root.collect_filters()
 
     ############### Display data ###############
     GridLayout:
-        size_hint: 1,0.1
+        size_hint: 1,0.03
         cols: 5
-        Label:
-            text: 'Id'
-            bold: True
-            size_hint: None,None
-            width:350
-            height: 50
-            canvas:
-                Color: 
-                    rgba: [0.918, 0.878, 0.835, 0.2]
-                Rectangle: 
-                    pos: self.pos
-                    size: self.size
         Label:
             text: 'Username'
             bold: True
@@ -135,6 +128,17 @@
             canvas:
                 Color: 
                     rgba: [0.918, 0.878, 0.835, 0.2]
+                Rectangle: 
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: 'Renewal'
+            bold: True
+            size_hint: 1,None
+            height: 50
+            canvas:
+                Color: 
+                    rgba: 0.133, 0.200, 0.231, 0.2
                 Rectangle: 
                     pos: self.pos
                     size: self.size
