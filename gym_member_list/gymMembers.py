@@ -17,25 +17,30 @@ class GymMembers(BoxLayout):
         self.bind(members=self.display_data)
 
     def collect_filters(self):
-        username = self.ids.username_filter.text
-        filtered_members = []  # Temporary list to collect matching members
+        username = self.ids.username_filter.text.strip() 
 
-        if len(username) != 0:
-            for member in self.members:
-                if member[1] == username:
-                    filtered_members.append(member)
+        if username:
+            filtered_members = [member for member in fetch_all() if member[1] == username]
 
             if filtered_members:
                 self.members = filtered_members
+                self.ids.not_found.text = ''
             else:
-                no_result_found = Label(text='There is no member with this name', font_size="18sp")
-                self.ids.user_display.clear_widgets()  # Clear previous results
-                self.ids.user_display.add_widget(no_result_found)
+                self.members = []  
+                self.ids.user_display.clear_widgets()  
+                self.ids.not_found.text = "Username not Found"
         else:
-            # Fetch all members if no username filter is provided
+            
+            self.ids.not_found.text = ''
             self.members = fetch_all()
 
-            
+        self.display_data(self, self.members)  # Update the display
+
+
+
+
+
+
     def display_data(self, instance, value):
         
         self.ids.user_display.clear_widgets()
@@ -65,8 +70,6 @@ class GymMembers(BoxLayout):
     def renew_membership(self, member_id, sub_method, img_widget):
         # Perform renewal logic
         membership_renewal(member_id, sub_method)
-        
-        # Update the image to show active status
         img_widget.source = "active.png"
         img_widget.reload()  # Refresh the image to apply the new source #!Here Where to autoReload
         

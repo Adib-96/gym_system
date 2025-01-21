@@ -17,7 +17,7 @@
         Label:
             text: "Search By Username:"
         TextInput:
-            size_hint: 1, 0.86
+            size_hint: 1, 0.9
             id: username_filter
             hint_text: "Enter username"
             multiline: False
@@ -83,6 +83,12 @@
         pos_hint: {"center_x": 0.70}
         font_size: "18sp"
         on_press: root.collect_filters()
+    Label:
+        text: ''
+        id:not_found
+        size_hint: 0.4, 0.05
+        pos_hint: {"center_x": 0.70}
+        font_size: "18sp"
 
     ############### Display data ###############
     GridLayout:
