@@ -5,7 +5,7 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ListProperty
-from warehouse.database import fetch_all, membership_renewal
+from warehouse.database import fetch_all,membership_renewal
 from datetime import datetime
 from functools import partial
 
@@ -17,11 +17,27 @@ class GymMembers(BoxLayout):
         self.bind(members=self.display_data)
 
     def collect_filters(self):
-        
-        # Fetch data and update members list
-        self.members = fetch_all()
+        username = self.ids.username_filter.text
+        filtered_members = []  # Temporary list to collect matching members
 
+        if len(username) != 0:
+            for member in self.members:
+                if member[1] == username:
+                    filtered_members.append(member)
+
+            if filtered_members:
+                self.members = filtered_members
+            else:
+                no_result_found = Label(text='There is no member with this name', font_size="18sp")
+                self.ids.user_display.clear_widgets()  # Clear previous results
+                self.ids.user_display.add_widget(no_result_found)
+        else:
+            # Fetch all members if no username filter is provided
+            self.members = fetch_all()
+
+            
     def display_data(self, instance, value):
+        
         self.ids.user_display.clear_widgets()
         for user in self.members:
             statut = "inactive.png"
@@ -45,6 +61,7 @@ class GymMembers(BoxLayout):
             self.ids.user_display.add_widget(img_active_inactive)
             self.ids.user_display.add_widget(renewal_label)
 
+    #!function for renewel
     def renew_membership(self, member_id, sub_method, img_widget):
         # Perform renewal logic
         membership_renewal(member_id, sub_method)
@@ -52,6 +69,7 @@ class GymMembers(BoxLayout):
         # Update the image to show active status
         img_widget.source = "active.png"
         img_widget.reload()  # Refresh the image to apply the new source #!Here Where to autoReload
+        
 
 class MembersDisplay(Screen):
     def __init__(self, **kwargs):

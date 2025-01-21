@@ -8,6 +8,7 @@
         Rectangle: 
             pos: self.pos
             size: self.size
+
     ########### Filter by Username ###########
     BoxLayout:
         size_hint: 1, 0.05
@@ -16,66 +17,68 @@
         Label:
             text: "Search By Username:"
         TextInput:
-            size_hint: 1,0.76
+            size_hint: 1, 0.86
             id: username_filter
             hint_text: "Enter username"
             multiline: False
             font_size: 20
-            padding: 10
+            padding: 15
 
     ######## Filter by Activity #########
-    BoxLayout:
-        orientation: "horizontal"
-        size_hint: 1, 0.05
-        pos_hint: {"center_x":0.45}
-        Label:
-            text: "Search By Activity:"
-        BoxLayout:
-            orientation: "horizontal"
-            spacing: 10
-            Label:
-                text: "BODYBUILDING"
-            CheckBox:
-                group: 'activity'
-                id: bodybuilding
-            Label:
-                text: "CROSSFIT"
-            CheckBox:
-                group: 'activity'
-                id: crossfit
-            Label:
-                text: "MARTIAL_ARTS"
-            CheckBox:
-                group: 'activity'
-                id: martial_arts
+    # BoxLayout:
+    #     orientation: "horizontal"
+    #     size_hint: 1, 0.05
+    #     pos_hint: {"center_x":0.45}
+    #     Label:
+    #         text: "Search By Activity:"
+    #     BoxLayout:
+    #         orientation: "horizontal"
+    #         spacing: 10
+    #         Label:
+    #             text: "BODYBUILDING"
+    #         CheckBox:
+    #             group: 'activity'
+    #             id: bodybuilding
+    #         Label:
+    #             text: "CROSSFIT"
+    #         CheckBox:
+    #             group: 'activity'
+    #             id: crossfit
+    #         Label:
+    #             text: "MARTIAL_ARTS"
+    #         CheckBox:
+    #             group: 'activity'
+    #             id: martial_arts
 
     ######## Filter by Subscription Method ########
-    BoxLayout:
-        orientation: "horizontal"
-        size_hint: 1, 0.05
-        pos_hint: {"center_x":0.45}
-        Label:
-            text: "Search By Subscription Method:"
-        BoxLayout:
-            orientation: "horizontal"
-            spacing: 10
-            Label:
-                text: "Monthly"
-            CheckBox:
-                group: 'subcription_methode'
-                id: monthly
-            Label:
-                text: "20_session"
-            CheckBox:
-                group: 'subcription_methode'
-                id: session_20
-            Label:
-                text: "30_session"
-            CheckBox:
-                group: 'subcription_methode'
-                id: session_30
+    # BoxLayout:
+    #     orientation: "horizontal"
+    #     size_hint: 1, 0.05
+    #     pos_hint: {"center_x":0.45}
+    #     Label:
+    #         text: "Search By Subscription Method:"
+    #     BoxLayout:
+    #         orientation: "horizontal"
+    #         spacing: 10
+    #         Label:
+    #             text: "Monthly"
+    #         CheckBox:
+    #             group: 'subscription_method'
+    #             id: monthly
+    #         Label:
+    #             text: "20_session"
+    #         CheckBox:
+    #             group: 'subscription_method'
+    #             id: session_20
+    #         Label:
+    #             text: "30_session"
+    #         CheckBox:
+    #             group: 'subscription_method'
+    #             id: session_30
+                
+    
     Button:
-        text: "Apply Filters"
+        text: "Search"
         size_hint: 0.4, 0.05
         pos_hint: {"center_x": 0.70}
         font_size: "18sp"
@@ -83,13 +86,13 @@
 
     ############### Display data ###############
     GridLayout:
-        size_hint: 1,0.03
+        size_hint: 1, 0.03
         cols: 5
         Label:
             text: 'Username'
             bold: True
-            color: 0,0.5,1,1
-            size_hint: 1,None
+            color: 0, 0.5, 1, 1
+            size_hint: 1, None
             height: 50
             canvas:
                 Color: 
@@ -100,7 +103,7 @@
         Label:
             text: 'Activity'
             bold: True
-            size_hint: 1,None
+            size_hint: 1, None
             height: 50
             canvas:
                 Color: 
@@ -111,9 +114,9 @@
         Label:
             text: 'Subscription Method'
             bold: True
-            size_hint: 1,None
+            size_hint: 1, None
             height: 50
-            color: 0,0.5,1,1
+            color: 0, 0.5, 1, 1
             canvas:
                 Color: 
                     rgba: 0.133, 0.200, 0.231, 0.2
@@ -123,7 +126,7 @@
         Label:
             text: 'Active/Inactive'
             bold: True
-            size_hint: 1,None
+            size_hint: 1, None
             height: 50
             canvas:
                 Color: 
@@ -134,7 +137,7 @@
         Label:
             text: 'Renewal'
             bold: True
-            size_hint: 1,None
+            size_hint: 1, None
             height: 50
             canvas:
                 Color: 
@@ -142,6 +145,7 @@
                 Rectangle: 
                     pos: self.pos
                     size: self.size
+
     ScrollView:
         size_hint: 1, 0.4
         GridLayout:

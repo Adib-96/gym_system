@@ -5,7 +5,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang.builder import Builder
 from kivy.graphics import Color, Rectangle
-
+from kivy.uix.image import Image
 # Import your screens
 from subcription_view.subscForm import HomeScreen
 from scan_view.scan_view import QRCodeScannerScreen
@@ -29,17 +29,18 @@ class PowerPlanner(App):
                    ("QR_code Screen", "QR_code Screen"), 
                    ("MembersDisplay", "MembersDisplay"),
                    ]
-
+        
         self.selected_button = None
-
+        main_button = Button( text = "SELECT SCREEN",size_hint=(None, None), size=(180, 50))
+        main_button.bind(on_release=self.dropdown.open)
+        
         for screen_text, screen_name in screens:
-            btn = Button(text=screen_text, size_hint_y=None, height=44)
+            btn = Button(text=screen_text, size_hint=(None,None), height=44,width=180)
             btn.bind(on_release=lambda btn, name=screen_name: self.on_button_click(btn, name))
             self.dropdown.add_widget(btn)
 
         # Main button to trigger the dropdown
-        main_button = Button(text="Select Screen", size_hint=(None, None), size=(180, 44))
-        main_button.bind(on_release=self.dropdown.open)
+
 
         # BoxLayout setup with background color
         layout = BoxLayout(orientation="vertical")
