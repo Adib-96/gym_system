@@ -1,4 +1,5 @@
-# Gym Membership Management System
+# Gym Membership Management System <img src="assets/sparkles.svg" width=40 img/>
+
 
 ## Overview
 
@@ -45,7 +46,7 @@ The system includes secure QR code functionality enhanced with encryption for sm
 - __Efficient Check-In__: Members scan their encrypted QR codes for secure and swift access.
 - __Enhanced Security__: Encryption ensures data security, reducing unauthorized access risks.
 
-## Technologies Used
+## Technologies Used <img src="assets/python.svg" width=20/> <img src="assets/kivy.svg" width=20/> <img src="assets/sqlite.svg" width=20/>
 
 - __Frontend and Backend__: Python with Kivy for a cross-platform user interface.
 - __Database__: SQLite3 for storing member and subscription data.
@@ -85,7 +86,7 @@ Detailed Analytics: Offer insights into gym usage, member activity, and trends.
 ## Contributing
 Contributions are welcome! Please fork the repository and submit a pull request for review.
 
-## License
+## License <img src="assets/legal-license-mit.svg" width=40/>
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ## Author
