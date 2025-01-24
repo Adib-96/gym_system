@@ -48,8 +48,8 @@ def generate_qrcode(member_id):
 def decode_and_verify_qr_data(encoded_data):
     sql_statment_to_extract_HMAC = "SELECT member_id FROM user_hmac WHERE HMAC=?"
     sql_statment_to_fetch_member_name = "SELECT name from members WHERE member_id=?"
-    sql_statment_to_fetch_date_for_monthly_subscription = "SELECT subscription_end_date from subscriptions WHERE member_id=?"
-    sql_statment_to_fetch_date_for_sessions_subscription = "SELECT remaining_sessions from subscriptions WHERE member_id=?"
+    # sql_statment_to_fetch_date_for_monthly_subscription = "SELECT subscription_end_date from subscriptions WHERE member_id=?"
+    # sql_statment_to_fetch_date_for_sessions_subscription = "SELECT remaining_sessions from subscriptions WHERE member_id=?"
     
     try:
         with sqlite3.connect('./warehouse.db') as conn:
@@ -61,17 +61,17 @@ def decode_and_verify_qr_data(encoded_data):
             ##? execute query to extract membername
             cursor.execute(sql_statment_to_fetch_member_name,(user_id[0],))
             member_name = cursor.fetchone()
-            #? query to extract subscription_end_dat(Monthly)
-            cursor.execute(sql_statment_to_fetch_date_for_monthly_subscription,(user_id,))
-            end_date = cursor.fetchone()
-            print(end_date or 0)
-            cursor.execute(sql_statment_to_fetch_date_for_sessions_subscription,(user_id,))
-            remaining_session =  cursor.fetchone()
-            print(remaining_session or 0)
+            # #? query to extract subscription_end_dat(Monthly)
+            # cursor.execute(sql_statment_to_fetch_date_for_monthly_subscription,(user_id[0],))
+            # end_date = cursor.fetchone()
+            # print(end_date or 0)
+            # cursor.execute(sql_statment_to_fetch_date_for_sessions_subscription,(user_id[0],))
+            # remaining_session =  cursor.fetchone()
+            # print(remaining_session or 0)
             
             if user_id is None:
                 return "No matching record found for the provided HMAC."
-            return member_name[0]
+            
     
     except sqlite3.OperationalError as oe:
         print('Eroor ',oe)

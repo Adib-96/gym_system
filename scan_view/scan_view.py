@@ -43,5 +43,5 @@ class QRCodeScannerScreen(Screen):
             for code in decode(frame):
                 qr_data = code.data.decode('utf-8')
                 
-                user_name = decode_and_verify_qr_data(qr_data)
-                self.message.text = f"Hello {user_name}"
+                user_info = decode_and_verify_qr_data(qr_data)
+                
