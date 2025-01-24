@@ -58,8 +58,17 @@ def decode_and_verify_qr_data(encoded_data):
             #!! user_id here will return a tuple
             user_id = cursor.fetchone()
             print("------------{}----------".format(user_id))
+            ##? execute query to extract membername
             cursor.execute(sql_statment_to_fetch_member_name,(user_id[0],))
             member_name = cursor.fetchone()
+            #? query to extract subscription_end_dat(Monthly)
+            cursor.execute(sql_statment_to_fetch_date_for_monthly_subscription,(member_name,))
+            end_date = cursor.fetchone()
+            print(end_date or 0)
+            cursor.execute(sql_statment_to_fetch_date_for_sessions_subscription,(member_name,))
+            remaining_session =  cursor.fetchone()
+            print(remaining_session or 0)
+            
             if user_id is None:
                 return "No matching record found for the provided HMAC."
             return member_name[0]
