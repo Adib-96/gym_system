@@ -57,6 +57,7 @@ def decode_and_verify_qr_data(encoded_data):
             cursor.execute(sql_statment_to_extract_HMAC,(encoded_data,))
             #!! user_id here will return a tuple
             user_id = cursor.fetchone()
+            print("------------{}----------".format(user_id))
             cursor.execute(sql_statment_to_fetch_member_name,(user_id[0],))
             member_name = cursor.fetchone()
             if user_id is None:
