@@ -62,10 +62,10 @@ def decode_and_verify_qr_data(encoded_data):
             cursor.execute(sql_statment_to_fetch_member_name,(user_id[0],))
             member_name = cursor.fetchone()
             #? query to extract subscription_end_dat(Monthly)
-            cursor.execute(sql_statment_to_fetch_date_for_monthly_subscription,(member_name,))
+            cursor.execute(sql_statment_to_fetch_date_for_monthly_subscription,(user_id,))
             end_date = cursor.fetchone()
             print(end_date or 0)
-            cursor.execute(sql_statment_to_fetch_date_for_sessions_subscription,(member_name,))
+            cursor.execute(sql_statment_to_fetch_date_for_sessions_subscription,(user_id,))
             remaining_session =  cursor.fetchone()
             print(remaining_session or 0)
             
