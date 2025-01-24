@@ -81,11 +81,7 @@ def update_member_entry(member_id):
             
             if datetime.now() > subscription_end_date:
                 #!------------extend for another month-----------------
-                new_end_date = datetime.now() + timedelta(days=30)
-                cursor.execute(
-                    "UPDATE subscriptions SET subscription_end_date=? WHERE member_id=? AND activity_id=?", 
-                    (new_end_date.strftime("%Y-%m-%d"), member_id, activity_id)
-                )
+                print('--------------your month is done please renew!!!-------------------')
                 #!------------extend for another month-----------------
             else:
                 print("Monthly subscription still active.")
@@ -100,8 +96,7 @@ def update_member_entry(member_id):
                     (remaining_sessions, member_id, activity_id)
                 )
                 if remaining_sessions == 0:
-                    #TODO we gonna ask member about renewal
-                    print("Session-based subscription used up. Please renew.")
+                    print('-----------------access denied please renew!!!-----------------------')
             else:
                 #!!!!!---------------------Here we gonna make the renewal for sessions methods
                 print("No remaining sessions. Entry not allowed.")
