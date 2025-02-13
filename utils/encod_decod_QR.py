@@ -5,7 +5,7 @@ import qrcode
 import hmac
 import hashlib
 import base64
-from warehouse.database import insert_user_hmac
+from warehouse.database import insert_user_hmac,update_member_entry
 #! Load .env variables
 load_dotenv()
 key = os.getenv("QR_SECRET_KEY","waywa")
@@ -55,22 +55,19 @@ def decode_and_verify_qr_data(encoded_data):
         with sqlite3.connect('./warehouse.db') as conn:
             cursor = conn.cursor()
             cursor.execute(sql_statment_to_extract_HMAC,(encoded_data,))
+
+
             #!! user_id here will return a tuple
             user_id = cursor.fetchone()
-            print("------------{}----------".format(user_id))
-            ##? execute query to extract membername
+            if user_id is None:
+                return ("User not found",".")
+ 
+
+
+            member_status = update_member_entry(user_id[0])
             cursor.execute(sql_statment_to_fetch_member_name,(user_id[0],))
             member_name = cursor.fetchone()
-            # #? query to extract subscription_end_dat(Monthly)
-            # cursor.execute(sql_statment_to_fetch_date_for_monthly_subscription,(user_id[0],))
-            # end_date = cursor.fetchone()
-            # print(end_date or 0)
-            # cursor.execute(sql_statment_to_fetch_date_for_sessions_subscription,(user_id[0],))
-            # remaining_session =  cursor.fetchone()
-            # print(remaining_session or 0)
-            
-            if user_id is None:
-                return "No matching record found for the provided HMAC."
+            return (member_status,member_name)
             
     
     except sqlite3.OperationalError as oe:

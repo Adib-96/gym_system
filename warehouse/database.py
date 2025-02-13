@@ -69,22 +69,22 @@ def update_member_entry(member_id):
     subscriptions = cursor.fetchall()
 
     if not subscriptions:
-        print("No active subscription found for the member.")
-        return
+        conn.close()
+        return "No active subscription found for the member."
+
+    messages = []  # Collect messages instead of returning early
 
     for subscription in subscriptions:
         subscription_method = subscription["subscription_method"]  # 'monthly' or '20_session'/'30_session'
         activity_id = subscription["activity_id"]  # Which activity the subscription applies to
 
         if subscription_method == 'monthly':
-            subscription_end_date = datetime.strptime(subscription["subscription_end_date"], "%Y-%m-%d")
+            subscription_end_date = datetime.strptime(subscription["subscription_end_date"], "%Y/%m/%d")
             
-            if datetime.now() > subscription_end_date:
-                #!------------extend for another month-----------------
-                print('--------------your month is done please renew!!!-------------------')
-                #!------------extend for another month-----------------
+            if datetime.now() >= subscription_end_date:
+                messages.append("Your month is done, please renew.")
             else:
-                print("Monthly subscription still active.")
+                messages.append("Monthly subscription still active.")
         
         elif subscription_method in ('20_session', '30_session'):
             remaining_sessions = subscription["remaining_sessions"]
@@ -95,12 +95,11 @@ def update_member_entry(member_id):
                     "UPDATE subscriptions SET remaining_sessions=? WHERE member_id=? AND activity_id=?", 
                     (remaining_sessions, member_id, activity_id)
                 )
+                messages.append(f"Session used. Remaining: {remaining_sessions}")
                 if remaining_sessions == 0:
-                    print('-----------------access denied please renew!!!-----------------------')
+                    messages.append("Access denied, please renew!")
             else:
-                #!!!!!---------------------Here we gonna make the renewal for sessions methods
-                print("No remaining sessions. Entry not allowed.")
-                continue  # Skip transaction logging for this subscription
+                messages.append("No remaining sessions. Entry not allowed.")
 
         # Log the visit in the transactions table
         cursor.execute(
@@ -110,6 +109,8 @@ def update_member_entry(member_id):
 
     conn.commit()
     conn.close()
+    return "\n".join(messages)  # Return all messages instead of exiting early
+
 
 
 
